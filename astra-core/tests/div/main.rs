@@ -1,10 +1,14 @@
 use astra_core::Component;
 
-struct Div(String);
+struct Div<C>(C);
 
-impl Component for Div {
-    fn build(&self, id_provider: &mut impl FnMut() -> String) -> String {
-        format!("<div id={}>{}</div>", id_provider(), self.0)
+impl<C: Component> Component for Div<C> {
+    fn build(self, id_provider: &mut impl FnMut() -> String) -> String {
+        format!(
+            "<div id={}>{}</div>",
+            id_provider(),
+            self.0.build(id_provider)
+        )
     }
 }
 
@@ -14,7 +18,7 @@ fn test_counter() {
     let mut counter = 0;
     let mut id_provider = || {
         counter += 1;
-        format!("c{counter})")
+        format!("c{counter}")
     };
 
     insta::assert_display_snapshot!(
