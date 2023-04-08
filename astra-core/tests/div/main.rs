@@ -1,7 +1,7 @@
 use astra_core::{Component, Div};
 
 #[test]
-fn test_counter() {
+fn test_div() {
     let app = Div("hello world".to_string());
     let mut counter = 0;
     let mut id_provider = || {
