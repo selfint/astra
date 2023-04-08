@@ -1,16 +1,4 @@
-use astra_core::Component;
-
-struct Div<C>(C);
-
-impl<C: Component> Component for Div<C> {
-    fn build(self, id_provider: &mut impl FnMut() -> String) -> String {
-        format!(
-            "<div id={}>{}</div>",
-            id_provider(),
-            self.0.build(id_provider)
-        )
-    }
-}
+use astra_core::{Component, Div};
 
 #[test]
 fn test_counter() {
